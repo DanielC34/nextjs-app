@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import WhatbytesImg from "@/assets/whatbyte.jpg"; // Adjust the path if necessary
+import User from "@/app/components/ui/user";
 
 export default function Header() {
   return (
@@ -16,6 +17,10 @@ export default function Header() {
             alt="WhatBytes"
             className="h-9 w-55"
           />
+        </div>
+        <div className="flex items-center">
+          {/*User Component placeholder */}
+          <User />
         </div>
       </div>
     </header>
