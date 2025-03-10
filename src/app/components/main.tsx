@@ -139,7 +139,7 @@ export default function Main() {
         {/* Right Column (md: span 1) */}
         <div className="md:col-span-1 flex flex-col gap-4">
           {/* Syllabus Wise Analysis */}
-          <div className="bg-yellow-300 border border-gray-400 p-4 rounded-lg">
+          <div className="bg-white h-60 border border-gray-400 p-4 rounded-lg">
             <h3 className="text-lg font-semibold">Syllabus Wise Analysis</h3>
             <div className="mt-4">
               <div className="flex items center">
