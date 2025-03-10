@@ -46,7 +46,7 @@ const User = () => {
         )}
       </Listbox>
       {/* User Name */}
-      <span className="ml-2 text-gray-800">John Doe</span>
+      <span className="ml-2 text-black font-bold">John Doe</span>
     </div>
   );
 };

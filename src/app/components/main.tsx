@@ -7,71 +7,63 @@ import {
   ChartBarIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
-import Modal from "./ui/modal"; // Import the Modal component
+import Modal from "./ui/modal";
 import Image from "next/image";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar"; // Import CircularProgressbar
-import "react-circular-progressbar/dist/styles.css"; // Import styles
-import LineChart from "./line"; // Import the LineChart component
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import LineChart from "./line";
 
 export default function Main() {
-  const [isOpen, setIsOpen] = useState(false); // State to manage the modal visibility
-  const [score, setScore] = useState("10"); // State to manage the score input value
-  const [rank, setRank] = useState(""); // State to manage the rank input value
-  const [percentile, setPercentile] = useState("30"); // State to manage the percentile input value
+  const [isOpen, setIsOpen] = useState(false);
+  const [score, setScore] = useState("10");
+  const [rank, setRank] = useState("");
+  const [percentile, setPercentile] = useState("30");
 
-  // Retrieve the score, rank, and percentile from local storage when the component mounts
+  // Load saved values from local storage
   useEffect(() => {
     const savedScore = localStorage.getItem("score");
     const savedRank = localStorage.getItem("rank");
     const savedPercentile = localStorage.getItem("percentile");
 
-    if (savedScore) {
-      setScore(savedScore);
-    }
-    if (savedRank) {
-      setRank(savedRank);
-    }
-    if (savedPercentile) {
-      setPercentile(savedPercentile);
-    }
+    if (savedScore) setScore(savedScore);
+    if (savedRank) setRank(savedRank);
+    if (savedPercentile) setPercentile(savedPercentile);
   }, []);
 
-  const openModal = () => {
-    setIsOpen(true); // Open the modal
-  };
-
-  const closeModal = () => {
-    setIsOpen(false); // Close the modal
-  };
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const handleSave = (
     newScore: string,
     newRank: string,
     newPercentile: string
   ) => {
-    setScore(newScore); // Update the score state with the new score
-    setRank(newRank); // Update the rank state with the new rank
-    setPercentile(newPercentile); // Update the percentile state with the new percentile
+    setScore(newScore);
+    setRank(newRank);
+    setPercentile(newPercentile);
 
-    localStorage.setItem("score", newScore); // Save the new score to local storage
-    localStorage.setItem("rank", newRank); // Save the new rank to local storage
-    localStorage.setItem("percentile", newPercentile); // Save the new percentile to local storage
+    // Save to local storage
+    localStorage.setItem("score", newScore);
+    localStorage.setItem("rank", newRank);
+    localStorage.setItem("percentile", newPercentile);
 
-    closeModal(); // Close the modal
+    closeModal();
   };
 
-  // Calculate the percentage for the circular progress bar
+  // Calculate percentage for the circular progress bar
   const scorePercentage = (Number(score) / 15) * 100;
 
   return (
     <div className="p-6 ml-64 bg-white font-sans">
       <h1 className="text-2xl font-bold mb-4">Skill test</h1>
-      <div className="grid grid-cols-3 gap-4">
-        {/* Left Column */}
-        <div className="col-span-2 flex flex-col gap-4">
+
+      {/* Responsive Grid: 1 column on small, 3 columns on md+ */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Left Column (md: span 2) */}
+        <div className="md:col-span-2 flex flex-col gap-4">
           {/* Skill Test Summary */}
           <div className="flex justify-between bg-white w-full border border-gray-300 rounded-lg p-4">
-            <div className="flex items-center mb-2 bg-blue-200">
+            <div className="flex items-center mb-2 bg-white">
               <Image
                 src={HTMLIcon}
                 alt="HTML Icon"
@@ -81,13 +73,13 @@ export default function Main() {
                 <h2 className="text-lg font-bold">
                   Hyper Text Markup Language
                 </h2>
-                <p className="text-sm text-gray-600 bg-yellow-200">
+                <p className="text-sm text-gray-600 bg-white">
                   Questions: 08 | Duration: 15 mins | Submitted on 5 June 2021
                 </p>
               </div>
             </div>
             <Button
-              onClick={openModal} // Call the openModal function
+              onClick={openModal}
               className="bg-blue-800 text-white px-4 py-2 rounded-md h-10"
             >
               Update
@@ -101,10 +93,7 @@ export default function Main() {
               {/* Your Rank */}
               <div className="bg-white p-4 border-r border-gray-900 flex items-center justify-start">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
-                  <TrophyIcon
-                    className="h-6 w-6 text-gray-400"
-                    aria-hidden="true"
-                  />
+                  <TrophyIcon className="h-6 w-6 text-gray-400" />
                 </div>
                 <div className="ml-2">
                   <h3 className="text-md font-bold text-left">{rank}</h3>
@@ -114,10 +103,7 @@ export default function Main() {
               {/* Percentile */}
               <div className="bg-white p-4 border-r border-gray-900 flex items-center justify-start">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
-                  <ChartBarIcon
-                    className="h-6 w-6 text-gray-400"
-                    aria-hidden="true"
-                  />
+                  <ChartBarIcon className="h-6 w-6 text-gray-400" />
                 </div>
                 <div className="ml-2">
                   <h3 className="text-md font-bold">{percentile}%</h3>
@@ -125,12 +111,9 @@ export default function Main() {
                 </div>
               </div>
               {/* Correct Answers */}
-              <div className="bg-yellow-300 p-4 flex items-center justify-start">
+              <div className="bg-white p-4 flex items-center justify-start">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
-                  <CheckCircleIcon
-                    className="h-6 w-6 text-green-500"
-                    aria-hidden="true"
-                  />
+                  <CheckCircleIcon className="h-6 w-6 text-green-500" />
                 </div>
                 <div className="ml-2">
                   <h3 className="text-md font-bold">{score}/15</h3>
@@ -140,7 +123,7 @@ export default function Main() {
             </div>
           </div>
 
-          {/* Comparison Graph Placeholder */}
+          {/* Comparison Graph */}
           <div className="bg-white border border-gray-400 p-4 rounded-lg h-110 flex flex-col">
             <h3 className="text-black font-bold">Comparison Graph</h3>
             <p className="text-gray-500">
@@ -148,14 +131,13 @@ export default function Main() {
               of all the engineers who took this assessment
             </p>
             <div className="mt-4">
-              <LineChart percentile={Number(percentile)} />{" "}
-              {/* Pass the percentile value to the LineChart component */}
+              <LineChart percentile={Number(percentile)} />
             </div>
           </div>
         </div>
 
-        {/* Right Column */}
-        <div className="flex flex-col gap-4 ml-4">
+        {/* Right Column (md: span 1) */}
+        <div className="md:col-span-1 flex flex-col gap-4">
           {/* Syllabus Wise Analysis */}
           <div className="bg-white border border-gray-400 p-4 rounded-lg">
             <h3 className="text-lg font-semibold">Syllabus Wise Analysis</h3>
@@ -165,7 +147,7 @@ export default function Main() {
                 <div
                   className="bg-blue-500 h-2.5 rounded-full"
                   style={{ width: "80%" }}
-                ></div>
+                />
                 <span className="absolute right-0 top-0 transform translate-x-2 -translate-y-1/2 text-sm text-blue-500">
                   80%
                 </span>
@@ -175,21 +157,21 @@ export default function Main() {
                 <div
                   className="bg-orange-500 h-2.5 rounded-full"
                   style={{ width: "60%" }}
-                ></div>
+                />
               </div>
               <p className="text-sm">Tables & References in HTML</p>
               <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
                 <div
                   className="bg-red-500 h-2.5 rounded-full"
                   style={{ width: "24%" }}
-                ></div>
+                />
               </div>
               <p className="text-sm">Tables & CSS Basics</p>
               <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
                 <div
                   className="bg-green-500 h-2.5 rounded-full"
                   style={{ width: "96%" }}
-                ></div>
+                />
               </div>
             </div>
           </div>

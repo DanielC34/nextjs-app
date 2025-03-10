@@ -79,7 +79,7 @@ export default function Modal({
       className="relative z-10 font-sans" // Apply font-sans to all text within the modal
       onClose={closeModal} // Handle closing the modal
     >
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-900 bg-opacity-50">
+      <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-400 bg-opacity-25">
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
             <div className="flex items-center justify-between mb-6">
@@ -94,7 +94,12 @@ export default function Modal({
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  1. Update your Rank
+                  <div className="flex items-center">
+                    <div className="flex flex-row items-center justify-center w-10 h-10 rounded-full bg-blue-800 text-white mr-2">
+                      1.
+                    </div>
+                    <span>Update your Current Score (out of 15)</span>
+                  </div>
                 </label>
                 <input
                   type="text"
@@ -102,7 +107,7 @@ export default function Modal({
                   onChange={handleRankChange} // Handle changes in the rank input
                   className={`mt-1 block w-full rounded-md border ${
                     rankError ? "border-red-500" : "border-gray-300"
-                  } shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 px-3`}
+                  } border border-blue-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 px-3`}
                 />
                 {rankError && (
                   <p className="mt-1 text-sm text-red-500">{rankError}</p> // Display error message if there is an error
@@ -110,7 +115,12 @@ export default function Modal({
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  2. Update your Percentile
+                  <div className="flex items-center">
+                    <div className="flex flex-row items-center justify-center w-10 h-10 rounded-full bg-blue-800 text-white mr-2">
+                      2.
+                    </div>
+                    <span>Update your percentile (out of 100)</span>
+                  </div>
                 </label>
                 <input
                   type="text"
@@ -118,7 +128,7 @@ export default function Modal({
                   onChange={handlePercentileChange} // Handle changes in the percentile input
                   className={`mt-1 block w-full rounded-md border ${
                     percentileError ? "border-red-500" : "border-gray-300"
-                  } shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 px-3`}
+                  } border border-blue-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 px-3`}
                 />
                 {percentileError && (
                   <p className="mt-1 text-sm text-red-500">{percentileError}</p> // Display error message if there is an error
@@ -126,7 +136,12 @@ export default function Modal({
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  3. Update your Current Score (out of 15)
+                  <div className="flex items-center">
+                    <div className="flex flex-row items-center justify-center w-10 h-10 rounded-full bg-blue-800 text-white mr-2">
+                      3.
+                    </div>
+                    <span>Update your current score (out of 15)</span>
+                  </div>
                 </label>
                 <input
                   type="text"
@@ -134,7 +149,7 @@ export default function Modal({
                   onChange={handleScoreChange} // Handle changes in the score input
                   className={`mt-1 block w-full rounded-md border ${
                     scoreError ? "border-red-500" : "border-gray-300"
-                  } shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 px-3`}
+                  } border border-blue-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 px-3`}
                 />
                 {scoreError && (
                   <p className="mt-1 text-sm text-red-500">{scoreError}</p> // Display error message if there is an error
