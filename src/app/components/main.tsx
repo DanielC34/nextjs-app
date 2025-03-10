@@ -15,12 +15,23 @@ import "react-circular-progressbar/dist/styles.css"; // Import styles
 export default function Main() {
   const [isOpen, setIsOpen] = useState(false); // State to manage the modal visibility
   const [score, setScore] = useState("10"); // State to manage the score input value
+  const [rank, setRank] = useState(""); // State to manage the rank input value
+  const [percentile, setPercentile] = useState("30"); // State to manage the percentile input value
 
-  // Retrieve the score from local storage when the component mounts
+  // Retrieve the score, rank, and percentile from local storage when the component mounts
   useEffect(() => {
     const savedScore = localStorage.getItem("score");
+    const savedRank = localStorage.getItem("rank");
+    const savedPercentile = localStorage.getItem("percentile");
+
     if (savedScore) {
       setScore(savedScore);
+    }
+    if (savedRank) {
+      setRank(savedRank);
+    }
+    if (savedPercentile) {
+      setPercentile(savedPercentile);
     }
   }, []);
 
@@ -32,9 +43,19 @@ export default function Main() {
     setIsOpen(false); // Close the modal
   };
 
-  const handleSave = (newScore: string) => {
+  const handleSave = (
+    newScore: string,
+    newRank: string,
+    newPercentile: string
+  ) => {
     setScore(newScore); // Update the score state with the new score
+    setRank(newRank); // Update the rank state with the new rank
+    setPercentile(newPercentile); // Update the percentile state with the new percentile
+
     localStorage.setItem("score", newScore); // Save the new score to local storage
+    localStorage.setItem("rank", newRank); // Save the new rank to local storage
+    localStorage.setItem("percentile", newPercentile); // Save the new percentile to local storage
+
     closeModal(); // Close the modal
   };
 
@@ -85,7 +106,7 @@ export default function Main() {
                   />
                 </div>
                 <div className="ml-2">
-                  <h3 className="text-md font-bold text-left">1</h3>
+                  <h3 className="text-md font-bold text-left">{rank}</h3>
                   <p className="text-gray-600 text-sm">Your Rank</p>
                 </div>
               </div>
@@ -98,7 +119,7 @@ export default function Main() {
                   />
                 </div>
                 <div className="ml-2">
-                  <h3 className="text-md font-bold">30%</h3>
+                  <h3 className="text-md font-bold">{percentile}%</h3>
                   <p className="text-gray-600 text-sm">Percentile</p>
                 </div>
               </div>
@@ -191,6 +212,8 @@ export default function Main() {
         isOpen={isOpen}
         closeModal={closeModal}
         initialScore={score}
+        initialRank={rank}
+        initialPercentile={percentile}
         onSave={handleSave}
       />
     </div>

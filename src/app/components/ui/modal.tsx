@@ -11,17 +11,21 @@ interface ModalProps {
   isOpen: boolean; // Prop to control the visibility of the modal
   closeModal: () => void; // Prop to handle closing the modal
   initialScore: string; // Starting score value passed from parent component
-  onSave: (newScore: string) => void; // Callback function to send the updated score back to the parent
+  initialRank: string; // Starting rank value passed from parent component
+  initialPercentile: string; // Starting percentile value passed from parent component
+  onSave: (newScore: string, newRank: string, newPercentile: string) => void; // Callback function to send the updated values back to the parent
 }
 
 export default function Modal({
   isOpen,
   closeModal,
   initialScore,
+  initialRank,
+  initialPercentile,
   onSave,
 }: ModalProps) {
-  const [rank, setRank] = useState(""); // State to manage the rank input value
-  const [percentile, setPercentile] = useState("30"); // State to manage the percentile input value
+  const [rank, setRank] = useState(initialRank); // State to manage the rank input value
+  const [percentile, setPercentile] = useState(initialPercentile); // State to manage the percentile input value
   const [score, setScore] = useState(initialScore); // State to manage the score input value, initialized with initialScore
   const [rankError, setRankError] = useState<string | null>(null); // State to manage the rank input error
   const [percentileError, setPercentileError] = useState<string | null>(null); // State to manage the percentile input error
@@ -29,7 +33,9 @@ export default function Modal({
 
   useEffect(() => {
     setScore(initialScore); // Update score when initialScore changes
-  }, [initialScore]);
+    setRank(initialRank); // Update rank when initialRank changes
+    setPercentile(initialPercentile); // Update percentile when initialPercentile changes
+  }, [initialScore, initialRank, initialPercentile]);
 
   // Function to handle changes in the rank input
   const handleRankChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,7 +150,7 @@ export default function Modal({
               </Button>
               <Button
                 className="bg-blue-800 text-white px-4 py-2 rounded-md flex items-center"
-                onClick={() => onSave(score)} // Handle save action and pass the updated score back to the parent
+                onClick={() => onSave(score, rank, percentile)} // Handle save action and pass the updated values back to the parent
               >
                 Save
                 <ArrowRightIcon className="h-5 w-5 ml-2" />{" "}
