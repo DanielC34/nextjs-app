@@ -91,9 +91,9 @@ export default function Main() {
             <h3 className="text-lg font-semibold">Quick Statistics</h3>
             <div className="grid grid-cols-3 gap-4 my-4">
               {/* Your Rank */}
-              <div className="bg-white p-4 border-r border-gray-900 flex items-center justify-start">
+              <div className="bg-white p-4 border-r border-gray-400 flex items-center justify-start">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
-                  <TrophyIcon className="h-6 w-6 text-gray-400" />
+                  <TrophyIcon className="h-6 w-6 text-black" />
                 </div>
                 <div className="ml-2">
                   <h3 className="text-md font-bold text-left">{rank}</h3>
@@ -101,9 +101,9 @@ export default function Main() {
                 </div>
               </div>
               {/* Percentile */}
-              <div className="bg-white p-4 border-r border-gray-900 flex items-center justify-start">
+              <div className="bg-white p-4 border-r border-gray-400 flex items-center justify-start">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
-                  <ChartBarIcon className="h-6 w-6 text-gray-400" />
+                  <ChartBarIcon className="h-6 w-6 text-black" />
                 </div>
                 <div className="ml-2">
                   <h3 className="text-md font-bold">{percentile}%</h3>
@@ -113,7 +113,7 @@ export default function Main() {
               {/* Correct Answers */}
               <div className="bg-white p-4 flex items-center justify-start">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
-                  <CheckCircleIcon className="h-6 w-6 text-green-500" />
+                  <CheckCircleIcon className="h-6 w-6 text-black" />
                 </div>
                 <div className="ml-2">
                   <h3 className="text-md font-bold">{score}/15</h3>
@@ -139,34 +139,43 @@ export default function Main() {
         {/* Right Column (md: span 1) */}
         <div className="md:col-span-1 flex flex-col gap-4">
           {/* Syllabus Wise Analysis */}
-          <div className="bg-white border border-gray-400 p-4 rounded-lg">
+          <div className="bg-yellow-300 border border-gray-400 p-4 rounded-lg">
             <h3 className="text-lg font-semibold">Syllabus Wise Analysis</h3>
             <div className="mt-4">
-              <p className="text-sm">HTML Tools, Forms, History</p>
+              <div className="flex items center">
+                <p className="text-sm">HTML Tools, Forms, History-</p>
+                <p className="font-bold text-sm text-blue-600">80%</p>
+              </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2 relative">
                 <div
                   className="bg-blue-500 h-2.5 rounded-full"
                   style={{ width: "80%" }}
                 />
-                <span className="absolute right-0 top-0 transform translate-x-2 -translate-y-1/2 text-sm text-blue-500">
-                  80%
-                </span>
               </div>
-              <p className="text-sm">Tags & References in HTML</p>
+              <div className="flex items center">
+                <p className="text-sm">Tags & References in HTML - </p>
+                <p className="font-bold text-sm text-orange-500"> 60%</p>
+              </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
                 <div
                   className="bg-orange-500 h-2.5 rounded-full"
                   style={{ width: "60%" }}
                 />
               </div>
-              <p className="text-sm">Tables & References in HTML</p>
+              <div className="flex items-center">
+                <p className="text-sm">Tables & References in HTML - </p>
+                <p className="font-bold text-red-500"> 24%</p>
+              </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
                 <div
                   className="bg-red-500 h-2.5 rounded-full"
                   style={{ width: "24%" }}
                 />
               </div>
-              <p className="text-sm">Tables & CSS Basics</p>
+              <div className="flex items-center">
+                <p className="text-sm">Tables & CSS Basics -</p>
+                <p className="font-bold text-green-500"> 96%</p>
+              </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
                 <div
                   className="bg-green-500 h-2.5 rounded-full"
