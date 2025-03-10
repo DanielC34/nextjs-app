@@ -11,6 +11,7 @@ import Modal from "./ui/modal"; // Import the Modal component
 import Image from "next/image";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar"; // Import CircularProgressbar
 import "react-circular-progressbar/dist/styles.css"; // Import styles
+import LineChart from "./line"; // Import the LineChart component
 
 export default function Main() {
   const [isOpen, setIsOpen] = useState(false); // State to manage the modal visibility
@@ -140,8 +141,16 @@ export default function Main() {
           </div>
 
           {/* Comparison Graph Placeholder */}
-          <div className="bg-white border border-gray-400 p-4 rounded-lg h-40 flex">
-            <h3 className="text-gray-500">Comparison Graph</h3>
+          <div className="bg-white border border-gray-400 p-4 rounded-lg h-110 flex flex-col">
+            <h3 className="text-black font-bold">Comparison Graph</h3>
+            <p className="text-gray-500">
+              You have scored {percentile}% which is lower than the average 72%
+              of all the engineers who took this assessment
+            </p>
+            <div className="mt-4">
+              <LineChart percentile={Number(percentile)} />{" "}
+              {/* Pass the percentile value to the LineChart component */}
+            </div>
           </div>
         </div>
 
@@ -152,11 +161,14 @@ export default function Main() {
             <h3 className="text-lg font-semibold">Syllabus Wise Analysis</h3>
             <div className="mt-4">
               <p className="text-sm">HTML Tools, Forms, History</p>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+              <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2 relative">
                 <div
                   className="bg-blue-500 h-2.5 rounded-full"
                   style={{ width: "80%" }}
                 ></div>
+                <span className="absolute right-0 top-0 transform translate-x-2 -translate-y-1/2 text-sm text-blue-500">
+                  80%
+                </span>
               </div>
               <p className="text-sm">Tags & References in HTML</p>
               <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
@@ -190,10 +202,9 @@ export default function Main() {
               needs some improvements.
             </p>
             <div className="flex justify-center mt-4">
-              <div className="w-24 h-24">
+              <div className="w-24 h-24 relative">
                 <CircularProgressbar
                   value={scorePercentage}
-                  text={`${score}/15`}
                   styles={buildStyles({
                     textSize: "16px",
                     pathColor: "#4A90E2",
@@ -201,6 +212,11 @@ export default function Main() {
                     trailColor: "#d6d6d6",
                   })}
                 />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-md font-bold text-blue-500">
+                    {score}/15
+                  </span>
+                </div>
               </div>
             </div>
           </div>
