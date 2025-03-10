@@ -1,23 +1,35 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { Button } from "@headlessui/react";
 import { ArrowRightIcon } from "@heroicons/react/24/solid"; // Import the ArrowRightIcon
 import HTMLIcon from "@/assets/html-5.png"; // Adjust the path to your HTML5 logo image
 import Image from "next/image";
+import "react-circular-progressbar/dist/styles.css"; // Import styles
 
 interface ModalProps {
   isOpen: boolean; // Prop to control the visibility of the modal
   closeModal: () => void; // Prop to handle closing the modal
+  initialScore: string; // Starting score value passed from parent component
+  onSave: (newScore: string) => void; // Callback function to send the updated score back to the parent
 }
 
-export default function Modal({ isOpen, closeModal }: ModalProps) {
+export default function Modal({
+  isOpen,
+  closeModal,
+  initialScore,
+  onSave,
+}: ModalProps) {
   const [rank, setRank] = useState(""); // State to manage the rank input value
   const [percentile, setPercentile] = useState("30"); // State to manage the percentile input value
-  const [score, setScore] = useState("10"); // State to manage the score input value
+  const [score, setScore] = useState(initialScore); // State to manage the score input value, initialized with initialScore
   const [rankError, setRankError] = useState<string | null>(null); // State to manage the rank input error
   const [percentileError, setPercentileError] = useState<string | null>(null); // State to manage the percentile input error
   const [scoreError, setScoreError] = useState<string | null>(null); // State to manage the score input error
+
+  useEffect(() => {
+    setScore(initialScore); // Update score when initialScore changes
+  }, [initialScore]);
 
   // Function to handle changes in the rank input
   const handleRankChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +49,7 @@ export default function Modal({ isOpen, closeModal }: ModalProps) {
     if (!value || isNaN(Number(value))) {
       setPercentileError("Required and must be a number"); // Set error if the input is not a number
     } else if (Number(value) < 0 || Number(value) > 100) {
-      setPercentileError("Value must be between 0 and 100");
+      setPercentileError("Value must be between 0 and 100"); // Set error if the value is not between 0 and 100
     } else {
       setPercentileError(null); // Clear error if the input is valid
     }
@@ -47,8 +59,8 @@ export default function Modal({ isOpen, closeModal }: ModalProps) {
   const handleScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setScore(value);
-    if (!value || isNaN(Number(value))) {
-      setScoreError("Required and must be a number"); // Set error if the input is not a number
+    if (!value || isNaN(Number(value)) || Number(value) > 15) {
+      setScoreError("Required and must be a number less than or equal to 15"); // Set error if the input is not a number or greater than 15
     } else {
       setScoreError(null); // Clear error if the input is valid
     }
@@ -132,7 +144,7 @@ export default function Modal({ isOpen, closeModal }: ModalProps) {
               </Button>
               <Button
                 className="bg-blue-800 text-white px-4 py-2 rounded-md flex items-center"
-                onClick={() => console.log("Save clicked")} // Handle save action
+                onClick={() => onSave(score)} // Handle save action and pass the updated score back to the parent
               >
                 Save
                 <ArrowRightIcon className="h-5 w-5 ml-2" />{" "}

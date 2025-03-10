@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HTMLIcon from "@/assets/html-5.png";
 import { Button } from "@headlessui/react";
 import {
@@ -9,17 +9,37 @@ import {
 } from "@heroicons/react/24/outline";
 import Modal from "./ui/modal"; // Import the Modal component
 import Image from "next/image";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar"; // Import CircularProgressbar
+import "react-circular-progressbar/dist/styles.css"; // Import styles
 
 export default function Main() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // State to manage the modal visibility
+  const [score, setScore] = useState("10"); // State to manage the score input value
+
+  // Retrieve the score from local storage when the component mounts
+  useEffect(() => {
+    const savedScore = localStorage.getItem("score");
+    if (savedScore) {
+      setScore(savedScore);
+    }
+  }, []);
 
   const openModal = () => {
-    setIsOpen(true);
+    setIsOpen(true); // Open the modal
   };
 
   const closeModal = () => {
-    setIsOpen(false);
+    setIsOpen(false); // Close the modal
   };
+
+  const handleSave = (newScore: string) => {
+    setScore(newScore); // Update the score state with the new score
+    localStorage.setItem("score", newScore); // Save the new score to local storage
+    closeModal(); // Close the modal
+  };
+
+  // Calculate the percentage for the circular progress bar
+  const scorePercentage = (Number(score) / 15) * 100;
 
   return (
     <div className="p-6 ml-64 bg-white font-sans">
@@ -30,7 +50,11 @@ export default function Main() {
           {/* Skill Test Summary */}
           <div className="flex justify-between bg-white w-full border border-gray-300 rounded-lg p-4">
             <div className="flex items-center mb-2 bg-blue-200">
-              <Image src={HTMLIcon} alt="HTML Icon" className="h-10 w-10 mr-2" />
+              <Image
+                src={HTMLIcon}
+                alt="HTML Icon"
+                className="h-10 w-10 mr-2"
+              />
               <div>
                 <h2 className="text-lg font-bold">
                   Hyper Text Markup Language
@@ -87,7 +111,7 @@ export default function Main() {
                   />
                 </div>
                 <div className="ml-2">
-                  <h3 className="text-md font-bold">10 / 15</h3>
+                  <h3 className="text-md font-bold">{score}/15</h3>
                   <p className="text-gray-600 text-sm">Correct Answers</p>
                 </div>
               </div>
@@ -141,15 +165,34 @@ export default function Main() {
           <div className="bg-white border border-gray-400 p-4 rounded-lg text-center">
             <h3 className="text-lg font-semibold">Question Analysis</h3>
             <p className="text-gray-600">
-              You scored 10 questions correct out of 15. However, it still needs
-              some improvements.
+              You scored {score} questions correct out of 15. However, it still
+              needs some improvements.
             </p>
+            <div className="flex justify-center mt-4">
+              <div className="w-24 h-24">
+                <CircularProgressbar
+                  value={scorePercentage}
+                  text={`${score}/15`}
+                  styles={buildStyles({
+                    textSize: "16px",
+                    pathColor: "#4A90E2",
+                    textColor: "#4A90E2",
+                    trailColor: "#d6d6d6",
+                  })}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Modal */}
-      <Modal isOpen={isOpen} closeModal={closeModal} />
+      <Modal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        initialScore={score}
+        onSave={handleSave}
+      />
     </div>
   );
 }
